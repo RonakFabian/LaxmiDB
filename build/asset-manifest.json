@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/LaxmiDB/static/css/main.0e7fa2a2.css",
+    "main.js": "/LaxmiDB/static/js/main.2f380793.js",
+    "static/js/787.f4764e9b.chunk.js": "/LaxmiDB/static/js/787.f4764e9b.chunk.js",
+    "index.html": "/LaxmiDB/index.html",
+    "main.0e7fa2a2.css.map": "/LaxmiDB/static/css/main.0e7fa2a2.css.map",
+    "main.2f380793.js.map": "/LaxmiDB/static/js/main.2f380793.js.map",
+    "787.f4764e9b.chunk.js.map": "/LaxmiDB/static/js/787.f4764e9b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0e7fa2a2.css",
+    "static/js/main.2f380793.js"
+  ]
+}
