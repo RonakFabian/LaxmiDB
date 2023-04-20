@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import locationEntryService from "../services/locationEntry.services";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-const CreateTaskPopup = ({ modal, toggle, save }) =>
+const CreateTaskPopup = ({ modal, toggle, refreshTodos }) =>
 {
     const [taskName, setTaskName] = useState('');
     const [latitude, setLatitude] = useState('');
@@ -37,7 +37,7 @@ const CreateTaskPopup = ({ modal, toggle, save }) =>
 
     const handleSave = async (e) =>
     {
-        e.preventDefault()
+        e.preventDefault();
         setMessage("");
         if (taskName === "" || description === "")
         {
@@ -71,6 +71,8 @@ const CreateTaskPopup = ({ modal, toggle, save }) =>
         setLongitude('')
         setDescription('')
         toggle();
+
+        refreshTodos();
 
 
 

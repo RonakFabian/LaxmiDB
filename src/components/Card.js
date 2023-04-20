@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import EditTask from '../modals/EditTask'
 
-const Card = ({ taskObj, index, deleteTask, updateListArray }) =>
+const Card = ({ taskObj }) =>
 {
     const [modal, setModal] = useState(false);
 
@@ -9,6 +9,7 @@ const Card = ({ taskObj, index, deleteTask, updateListArray }) =>
     const toggle = () =>
     {
         setModal(!modal);
+        console.log("cliccked");
     }
 
 
@@ -32,11 +33,11 @@ const Card = ({ taskObj, index, deleteTask, updateListArray }) =>
 
                 <div class="mx-auto">
                     <button class="btn btn-success m-2 " >Locate</button>
-                    <button class="btn btn-primary m-2" >Edit</button>
+                    <button class="btn btn-primary m-2" onClick={() => setModal(true)} >Edit</button>
                     <button class="btn btn-danger m-2" >Delete</button>
                 </div>
             </div>
-            <EditTask modal={modal} toggle={toggle} taskObj={taskObj} />
+            <EditTask modal={modal} toggle={toggle} />
         </div >
     );
 };
