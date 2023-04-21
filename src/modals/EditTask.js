@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { db } from "../FirebaseConfig";
-import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import locationEntryServices from '../services/locationEntry.services';
 
-const EditTaskPopup = ({ modal, toggle, entryID, getEntries }) =>
+const EditTaskPopup = ({ modal, toggle, entryID, refreshTodos }) =>
 {
     const [taskName, setTaskName] = useState('');
-    const [latitude, setLatitude] = useState('');
+    const [latitude, setLatitude] = useState();
     const [longitude, setLongitude] = useState('');
     const [description, setDescription] = useState('');
+    const [entries, setEntries] = useState([]);
+    const [rerender, setRerender] = useState("");
 
-    const Refresh = () =>
-    {
-        getEntries();
-        setTaskName(taskName);
-        setDescription("Set New Description...");
-    }
+
+
+
     useEffect(() =>
     {
-        Refresh();
-
-    }, [modal, taskName]);
+        setTaskName("");
+        setDescription("");
+        refreshTodos();
+    }, [modal, rerender]);
 
     const handleChange = (e) =>
     {
@@ -37,7 +38,21 @@ const EditTaskPopup = ({ modal, toggle, entryID, getEntries }) =>
         {
             setDescription(value)
         }
+
+
     }
+    const getEntries = async () =>
+    {
+        await getDocs(collection(db, "laxmi-db"))
+            .then((querySnapshot) =>
+            {
+                const newData = querySnapshot.docs
+                    .map((doc) => ({ ...doc.data(), id: doc.id }));
+                setEntries(newData);
+                console.log(entries, newData);
+            })
+    }
+
 
 
 
@@ -45,15 +60,26 @@ const EditTaskPopup = ({ modal, toggle, entryID, getEntries }) =>
     const handleUpdate = async (e) =>
     {
         e.preventDefault();
+        e.currentTarget.disabled = true;
+        getEntries();
+        let a = entries;
+        let c = a.find(c => c.id == entryID);
+        console.log(c);
         const newLocationEntry = {
-            taskName,
-            description,
-            latitude,
-            longitude
+            taskName: taskName,
+            description: description,
+            latitude: c.latitude,
+            longitude: c.longitude
         };
         console.log(newLocationEntry);
         await locationEntryServices.updateLocationEntry(entryID, newLocationEntry);
         toggle();
+        setTimeout(() =>
+        {
+            setRerender(Math.random);
+
+        }, 1500);
+
     }
 
     return (
@@ -63,7 +89,7 @@ const EditTaskPopup = ({ modal, toggle, entryID, getEntries }) =>
 
                 <div className="form-group">
                     <label>Task Name</label>
-                    <input type="text" className="form-control" value={taskName} onChange={handleChange} name="taskName" />
+                    <input type="text" className="form-control" value={taskName} onChange={handleChange} name="taskName" placeholder='Enter New Task Name...' />
                 </div>
                 {/* <div className="form-group">
                     <label>Latitude</label>
@@ -75,7 +101,7 @@ const EditTaskPopup = ({ modal, toggle, entryID, getEntries }) =>
                 </div> */}
                 <div className="form-group">
                     <label>Description</label>
-                    <textarea rows="5" className="form-control" value={description} onChange={handleChange} name="description"></textarea>
+                    <textarea rows="5" className="form-control" value={description} onChange={handleChange} name="description" placeholder='Enter New Description...'></textarea>
                 </div>
 
             </ModalBody>

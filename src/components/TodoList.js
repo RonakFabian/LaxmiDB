@@ -84,7 +84,7 @@ const TodoList = ({ entryID, setEntryID }) =>
                                     <h1 class="card-title header-text">{doc.taskName}</h1>
                                     <p class="card-text">{doc.description}</p>
                                     <button className='btn btn-primary' onClick={() => locate(doc)}>Locate</button>
-                                    {/* <button className='btn btn-primary' onClick={() => { setEntryID(doc.id); toggleUpdate(); }}>Edit</button> */}
+                                    <button className='btn btn-primary' onClick={() => { setEntryID(doc.id); toggleUpdate(); }}>Edit</button>
                                     <button className='btn btn-primary' onClick={(e) => deleteHandler(doc.id)}>Delete</button>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@ const TodoList = ({ entryID, setEntryID }) =>
                 })}
             </div>
 
-            <EditTask modal={modalUpdate} toggle={toggleUpdate} entryID={entryID} getEntries={getEntries} />
+            <EditTask modal={modalUpdate} toggle={toggleUpdate} entryID={entryID} entries={entries} refreshTodos={getEntries} />
 
 
 

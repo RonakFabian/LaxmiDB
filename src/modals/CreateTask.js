@@ -37,45 +37,50 @@ const CreateTaskPopup = ({ modal, toggle, refreshTodos }) =>
 
     const handleSave = async (e) =>
     {
-        e.preventDefault();
-        setMessage("");
-        if (taskName === "" || description === "")
+        if (taskName !== "" && description !== "")
         {
+            e.preventDefault();
+            e.currentTarget.disabled = true;
+            setMessage("");
+
             setMessage({ error: true, msg: "All fields are mandatory!" });
-            return;
+
+            const newLocationEntry = {
+                taskName,
+                description,
+                latitude,
+                longitude
+            };
+            // console.log(newLocationEntry);
+
+            try
+            {
+
+                await locationEntryService.addLocationEntry(newLocationEntry);
+                setMessage({ error: false, msg: "New Entry added successfully!" });
+            }
+            catch (err)
+            {
+                setMessage({ error: true, msg: err.message });
+            }
+
+
+
+
+            setTaskName('')
+            setLatitude('')
+            setLongitude('')
+            setDescription('')
+            setTimeout(() =>
+            {
+                toggle();
+
+            }, 0);
+
+            refreshTodos();
+
+
         }
-        const newLocationEntry = {
-            taskName,
-            description,
-            latitude,
-            longitude
-        };
-        // console.log(newLocationEntry);
-
-        try
-        {
-
-            await locationEntryService.addLocationEntry(newLocationEntry);
-            setMessage({ error: false, msg: "New Entry added successfully!" });
-        }
-        catch (err)
-        {
-            setMessage({ error: true, msg: err.message });
-        }
-
-
-
-
-        setTaskName('')
-        setLatitude('')
-        setLongitude('')
-        setDescription('')
-        toggle();
-
-        refreshTodos();
-
-
-
     }
 
     return (
