@@ -91,19 +91,19 @@ const CreateTaskPopup = ({ modal, toggle, refreshTodos }) =>
 
                     <div className="form-group">
                         <label>Entry Name</label>
-                        <input type="text" className="form-control" value={taskName} onChange={handleChange} name="taskName" />
+                        <input type="text" className="form-control" value={taskName} onChange={handleChange} name="taskName" placeholder="Enter Task Name.." />
                     </div>
                     <div className="form-group">
                         <label>Latitude</label>
-                        <input type="number" className="form-control" value={latitude} onChange={handleChange} name="latitude" />
+                        <input type="number" className="form-control" value={latitude} onChange={handleChange} name="latitude" placeholder="Enter Latitude.." />
                     </div>
                     <div className="form-group">
                         <label>Longitude</label>
-                        <input type="number" className="form-control" value={longitude} onChange={handleChange} name="longitude" />
+                        <input type="number" className="form-control" value={longitude} onChange={handleChange} name="longitude" placeholder="Enter Longitude.." />
                     </div>
                     <div className="form-group">
                         <label>Description</label>
-                        <textarea rows="5" className="form-control" value={description} onChange={handleChange} name="description"></textarea>
+                        <textarea rows="5" className="form-control" value={description} onChange={handleChange} name="description" placeholder="Enter Description.."></textarea>
                     </div>
 
                 </ModalBody>

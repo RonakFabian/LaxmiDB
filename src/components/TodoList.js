@@ -5,6 +5,11 @@ import { collection, getDoc, getDocs, doc } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import locationEntryService from "../services/locationEntry.services";
 import { AiOutlinePlusSquare } from 'react-icons/ai';
+import { IoMdRefresh } from 'react-icons/io';
+import { MdLocationPin } from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
+import { MdSearch } from 'react-icons/md';
 import EditTask from '../modals/EditTask';
 
 
@@ -63,12 +68,12 @@ const TodoList = ({ entryID, setEntryID }) =>
         <>
             <div class="input-group p-2">
                 <input type="search" onChange={(e) => setSearch(e.target.value)} class="form-control rounded" placeholder="Search Entry.." aria-label="Search" aria-describedby="search-addon" />
-                <button type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                <button type="button" class="btn btn-primary"><MdSearch /></button>
             </div>
             <div className="header text-center">
                 <h3>Location Entry</h3>
-                <button className="btn btn-primary mt-2 m-2" onClick={() => setModal(true)} ><AiOutlinePlusSquare /> Create Task</button>
-                <button className="btn btn-secondary mt-2 m-2 " onClick={() => getEntries()}  >Refresh</button>
+                <button className="btn btn-primary mt-2 m-2 pb-2" onClick={() => setModal(true)} ><AiOutlinePlusSquare /> Create Task</button>
+                <button className="btn btn-secondary mt-2 m-2  pb-2" onClick={() => getEntries()} ><IoMdRefresh />Refresh</button>
             </div>
 
             <CreateTask toggle={toggle} modal={modal} refreshTodos={getEntries} />
@@ -83,9 +88,9 @@ const TodoList = ({ entryID, setEntryID }) =>
                                 <div class="card-body ">
                                     <h1 class="card-title header-text">{doc.taskName}</h1>
                                     <p class="card-text">{doc.description}</p>
-                                    <button className='btn btn-primary' onClick={() => locate(doc)}>Locate</button>
-                                    <button className='btn btn-primary' onClick={() => { setEntryID(doc.id); toggleUpdate(); }}>Edit</button>
-                                    <button className='btn btn-primary' onClick={(e) => deleteHandler(doc.id)}>Delete</button>
+                                    <button className='btn btn-primary pb-2' onClick={() => locate(doc)}><MdLocationPin /></button>
+                                    <button className='btn btn-primary pb-2' onClick={() => { setEntryID(doc.id); toggleUpdate(); }}><MdEdit /></button>
+                                    <button className='btn btn-primary pb-2' onClick={(e) => deleteHandler(doc.id)}><MdDelete /></button>
                                 </div>
                             </div>
 

@@ -38,6 +38,8 @@ const EditTaskPopup = ({ modal, toggle, entryID, refreshTodos }) =>
         {
             setDescription(value)
         }
+        getEntries();
+
 
 
     }
@@ -61,7 +63,6 @@ const EditTaskPopup = ({ modal, toggle, entryID, refreshTodos }) =>
     {
         e.preventDefault();
         e.currentTarget.disabled = true;
-        getEntries();
         let a = entries;
         let c = a.find(c => c.id == entryID);
         console.log(c);
@@ -80,6 +81,8 @@ const EditTaskPopup = ({ modal, toggle, entryID, refreshTodos }) =>
 
         }, 1500);
 
+
+
     }
 
     return (
@@ -91,14 +94,6 @@ const EditTaskPopup = ({ modal, toggle, entryID, refreshTodos }) =>
                     <label>Task Name</label>
                     <input type="text" className="form-control" value={taskName} onChange={handleChange} name="taskName" placeholder='Enter New Task Name...' />
                 </div>
-                {/* <div className="form-group">
-                    <label>Latitude</label>
-                    <input type="number" className="form-control" value={latitude} onChange={handleChange} name="latitude" />
-                </div>
-                <div className="form-group">
-                    <label>Longitude</label>
-                    <input type="number" className="form-control" value={longitude} onChange={handleChange} name="longitude" />
-                </div> */}
                 <div className="form-group">
                     <label>Description</label>
                     <textarea rows="5" className="form-control" value={description} onChange={handleChange} name="description" placeholder='Enter New Description...'></textarea>
