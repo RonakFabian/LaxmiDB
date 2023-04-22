@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import CreateTask from '../modals/CreateTask'
-import Card from './Card';
-import { collection, getDoc, getDocs, doc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import locationEntryService from "../services/locationEntry.services";
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import { IoMdRefresh } from 'react-icons/io';
-import { MdLocationPin } from 'react-icons/md';
-import { MdEdit } from 'react-icons/md';
-import { MdDelete } from 'react-icons/md';
-import { MdSearch } from 'react-icons/md';
+import { MdLocationPin, MdEdit, MdDelete, MdSearch } from 'react-icons/md';
 import EditTask from '../modals/EditTask';
 
 
@@ -19,9 +15,6 @@ const TodoList = ({ entryID, setEntryID }) =>
     const [search, setSearch] = useState("");
     const [modalUpdate, setModalUpdate] = useState(false);
     const [entries, setEntries] = useState([]);
-
-
-
 
     const getEntries = async () =>
     {
@@ -40,21 +33,10 @@ const TodoList = ({ entryID, setEntryID }) =>
         getEntries();
     }
 
-    useEffect(() =>
-    {
-        getEntries();
-    }, []);
+    useEffect(() => { getEntries(); }, []);
 
-    const toggle = () =>
-    {
-        setModal(!modal);
-    }
-
-    const toggleUpdate = () =>
-    {
-        setModalUpdate(!modalUpdate);
-
-    }
+    const toggle = () => { setModal(!modal); }
+    const toggleUpdate = () => { setModalUpdate(!modalUpdate); }
 
     const locate = (doc) =>
     {
@@ -66,42 +48,51 @@ const TodoList = ({ entryID, setEntryID }) =>
 
     return (
         <>
-            <div class="input-group p-2">
-                <input type="search" onChange={(e) => setSearch(e.target.value)} class="form-control rounded" placeholder="Search Entry.." aria-label="Search" aria-describedby="search-addon" />
-                <button type="button" class="btn btn-primary"><MdSearch /></button>
-            </div>
-            <div className="header text-center">
-                <h3>Location Entry</h3>
-                <button className="btn btn-primary mt-2 m-2 pb-2" onClick={() => setModal(true)} ><AiOutlinePlusSquare /> Create Task</button>
-                <button className="btn btn-secondary mt-2 m-2  pb-2" onClick={() => getEntries()} ><IoMdRefresh />Refresh</button>
+            <div className='sticky '>
+                <div class="input-group p-4 ">
+                    <button type="button" class="btn btn-secondary"><MdSearch /></button>
+                    <input type="search" onChange={(e) => setSearch(e.target.value)} class="form-control rounded" placeholder="Search Entry.." aria-label="Search" aria-describedby="search-addon" />
+                </div>
+                <div className=" text-center pb-4 ">
+                    {/* <h3>Location Entry</h3> */}
+                    <button className="btn btn-primary  m-2 pb-2" onClick={() => setModal(true)} ><AiOutlinePlusSquare /> Create Task</button>
+                    <button className="btn btn-secondary  m-2  pb-2" onClick={() => getEntries()} ><IoMdRefresh />Refresh</button>
+                </div>
             </div>
 
             <CreateTask toggle={toggle} modal={modal} refreshTodos={getEntries} />
 
-
-            <div className='mx-auto  justify-content-center text-center'>
+            <div className='mx-auto '>
                 {entries.filter((doc) => { return search.toLowerCase === '' ? doc : (doc.taskName.toLowerCase().includes(search) || doc.description.toLowerCase().includes(search)); }).map((doc, index) =>
                 {
                     return (
                         <>
-                            <div class="card" key={doc.id}>
-                                <div class="card-body ">
-                                    <h1 class="card-title header-text">{doc.taskName}</h1>
-                                    <p class="card-text">{doc.description}</p>
-                                    <button className='btn btn-primary pb-2' onClick={() => locate(doc)}><MdLocationPin /></button>
-                                    <button className='btn btn-primary pb-2' onClick={() => { setEntryID(doc.id); toggleUpdate(); }}><MdEdit /></button>
-                                    <button className='btn btn-primary pb-2' onClick={(e) => deleteHandler(doc.id)}><MdDelete /></button>
+                            <div className="card-outer">
+                                <div className="btn btn-secondary number">
+                                    <div>{index + 1 + " "}</div>
+                                </div>
+
+                                <div class="card w-100" key={doc.id}>
+                                    <div class="card-body w-100 ">
+                                        <div className="d-flex flex-wrap w-100">
+                                            <div className="col">
+                                                <h1 class="card-title ">{doc.taskName}</h1>
+                                                <p class="card-text">{doc.description}</p>
+                                            </div>
+                                            <div className="flex-column-reverse">
+                                                <button className='btn btn-primary button-new  pb-2 br-2' onClick={() => locate(doc)}><MdLocationPin /></button>
+                                                <button className='btn btn-primary button-new  pb-2 br-2' onClick={(e) => deleteHandler(doc.id)}><MdDelete /></button>
+                                                {/* <button className='btn btn-primary pb-2' onClick={() => { setEntryID(doc.id); toggleUpdate(); }}><MdEdit /></button> */}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
                         </>)
                 })}
             </div>
 
             <EditTask modal={modalUpdate} toggle={toggleUpdate} entryID={entryID} entries={entries} refreshTodos={getEntries} />
-
-
-
         </>
     );
 };

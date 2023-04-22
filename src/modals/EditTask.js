@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { db } from "../FirebaseConfig";
-import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore";
-
+import { collection, getDocs } from "firebase/firestore";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import locationEntryServices from '../services/locationEntry.services';
 
 const EditTaskPopup = ({ modal, toggle, entryID, refreshTodos }) =>
 {
     const [taskName, setTaskName] = useState('');
-    const [latitude, setLatitude] = useState();
-    const [longitude, setLongitude] = useState('');
     const [description, setDescription] = useState('');
     const [entries, setEntries] = useState([]);
     const [rerender, setRerender] = useState("");
-
-
-
 
     useEffect(() =>
     {
@@ -26,21 +20,17 @@ const EditTaskPopup = ({ modal, toggle, entryID, refreshTodos }) =>
 
     const handleChange = (e) =>
     {
-
         const { name, value } = e.target
 
         if (name === "taskName")
         {
             setTaskName(value)
         }
-
         else
         {
             setDescription(value)
         }
         getEntries();
-
-
 
     }
     const getEntries = async () =>
@@ -55,10 +45,6 @@ const EditTaskPopup = ({ modal, toggle, entryID, refreshTodos }) =>
             })
     }
 
-
-
-
-
     const handleUpdate = async (e) =>
     {
         e.preventDefault();
@@ -66,23 +52,24 @@ const EditTaskPopup = ({ modal, toggle, entryID, refreshTodos }) =>
         let a = entries;
         let c = a.find(c => c.id == entryID);
         console.log(c);
+
         const newLocationEntry = {
             taskName: taskName,
             description: description,
             latitude: c.latitude,
             longitude: c.longitude
         };
+
         console.log(newLocationEntry);
         await locationEntryServices.updateLocationEntry(entryID, newLocationEntry);
+
         toggle();
+
         setTimeout(() =>
         {
             setRerender(Math.random);
 
         }, 1500);
-
-
-
     }
 
     return (
