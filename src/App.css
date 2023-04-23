@@ -39,12 +39,53 @@
   margin-top: 0px;
   margin-bottom: 0px;
   border: solid;
-  box-shadow: 0px 2px 2px #808080;
+  box-shadow: 0px 2px 2px #a4a4a4;
   position: absolute;
   border-radius: 20px !important;
 
 
 }
+
+.peach {
+  background-color: #ffd196 !important;
+}
+
+.dark-peach {
+  background-color: #fe9000 !important;
+  border-color: #ff9100 !important;
+}
+
+
+.blue {
+  background-color: #b8e4ff !important;
+}
+
+.dark-blue {
+  background-color: #1da8ff !important;
+  border-color: #1da8ff !important;
+}
+
+
+
+.green {
+  background-color: #c3ff98 !important;
+}
+
+.dark-green {
+  background-color: #59d500 !important;
+  border-color: #59d500 !important;
+}
+
+.yellow {
+  background-color: #fffeb2 !important;
+}
+
+.dark-yellow {
+  background-color: #dfd800 !important;
+  border-color: #dfd800 !important;
+}
+
+
 
 .number {
   position: relative;
@@ -53,8 +94,11 @@
   z-index: 15;
   box-shadow: 0px 2px 5px #808080;
   border-radius: 50px !important;
+  border-width: 0px !important;
   padding-left: 14px !important;
   padding-right: 14px !important;
+  color: black !important;
+  font-weight: 600 !important;
 
 
 }
@@ -66,7 +110,7 @@
 }
 
 .card-body {
-  background-color: antiquewhite;
+  /* background-color: antiquewhite; */
   padding-left: 50px !important;
   padding-right: 25px !important;
 }
@@ -74,7 +118,7 @@
 .card-container {
   height: 300px;
   width: 300px;
-  box-shadow: 0px 3px 50px #484848;
+  box-shadow: 0px 3px 50px #7e7e7e;
 
 }
 
