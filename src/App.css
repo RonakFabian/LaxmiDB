@@ -5,7 +5,13 @@
   padding-top: 50px;
 }
 
-.search {}
+.text-center {
+  text-align: center !important;
+  align-items: center !important;
+  justify-items: center !important;
+
+
+}
 
 .sticky {
   position: sticky;
